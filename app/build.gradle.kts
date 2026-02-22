@@ -215,10 +215,11 @@ dependencies {
 }
 
 val archive = tasks.register("archive") {
-    inputs.property("gitVersionTriple.third", gitVersionTriple.third)
+    inputs.property("gitVersionTriple.third", gitVersionTriple.third.name)
 
     val outputFile = archiveDir.map { it.file("archive.tar") }
     outputs.file(outputFile)
+    outputs.dir(archiveDir)
 
     doLast {
         val format = "tar_for_task_$name"
@@ -345,8 +346,7 @@ androidComponents.onVariants { variant ->
         inputs.files(variantApkFiles)
 
         archiveFileName.set("${rootProject.name}-${variantVersionName.get()}-${variant.name}.zip")
-        // Force instantiation of old value or else this will cause infinite recursion
-        destinationDirectory.set(destinationDirectory.dir(variant.name).get())
+        destinationDirectory.set(layout.buildDirectory.dir("distributions/${variant.name}"))
 
         // Make the zip byte-for-byte reproducible (note that the APK is still not reproducible)
         isPreserveFileTimestamps = false
