@@ -27,10 +27,14 @@ jobs:
         # Debug build only since release builds require a signing key
         run: ./gradlew --no-daemon build zipDebug -x assembleRelease
 
-      - name: Upload artifacts
+      - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: BCR-debug
-          path: |
-            app/build/outputs/apk/debug/*.apk
-            app/build/distributions/debug/*.zip
+          name: BCR-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+
+      - name: Upload Magisk module
+        uses: actions/upload-artifact@v4
+        with:
+          name: BCR-debug-magisk-module
+          path: app/build/distributions/debug/*.zip
