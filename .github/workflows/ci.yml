@@ -26,3 +26,11 @@ jobs:
       - name: Build and test
         # Debug build only since release builds require a signing key
         run: ./gradlew --no-daemon build zipDebug -x assembleRelease
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea23f71124a5138df98160cca # v4.4.3
+        with:
+          name: BCR-debug
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/distributions/debug/*.zip
