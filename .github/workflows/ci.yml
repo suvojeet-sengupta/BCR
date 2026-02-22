@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew --no-daemon build zipDebug -x assembleRelease
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea23f71124a5138df98160cca # v4.4.3
+        uses: actions/upload-artifact@v4
         with:
           name: BCR-debug
           path: |
